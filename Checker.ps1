@@ -1,4 +1,4 @@
-$configJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/Brevzor/SecurityCheck/refs/heads/main/cfg.json" 
+$configJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/7evend-dev/RobloxPCCheck/refs/heads/main/cfg.json" 
 $Solara = $configJson.Solara
 $EntryPoint = $configJson.EntryPoint
 $FilesizeH = $configJson.FilesizeH
