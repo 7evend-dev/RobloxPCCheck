@@ -1,0 +1,15 @@
+{
+  "EntryPoint": "0x400000",
+  "FilesizeH": 50000000,
+  "FilesizeL": 100,
+  "Threat": "exploit",
+
+  "Solara": "executor",
+  "Wave": "injector",
+  "Xeno": "executor",
+  "Synapse": "executor",
+  "Potassium": "script",
+  "Volt": "injector",
+  "Delta": "injector",
+  "JJSploit": "executor"
+}
