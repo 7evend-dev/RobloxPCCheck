@@ -41,7 +41,7 @@ $h3 = & { $l1; "|     Threats     |"; $l2; }
 $h4 = & { $l1; "|      Events     |"; $l2; }
 $h5 = & { $l1; "|   Executables   |"; $l2; }
 
-$searchTerms = @("USBDEVIEW", "ro9an", "aimbot", "a!mbot", "almbot", "skrift", "zauberkasten")
+$searchTerms = @("USBDEVIEW", "krnl", "fluxus", "electron", "scriptware", "evon", "codex", "delta-executor", "celery", "hydrogen", "arceus", "oxygen u", "sw executor", "wearedevs", "xeno", "solara", "jjsploit", "synapse x", "inject", "injector", "executor", "bootstrapper", "bootstrap", "modmenu", "cheat", "hack")
 $userProfile = [System.Environment]::GetFolderPath('UserProfile')
 $pathsToSearch = @(
     [System.IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Recent'),
@@ -201,18 +201,6 @@ $o1 = & {
     if ((Get-WinEvent -LogName Security -FilterXPath "*[System[(EventID=1102) and TimeCreated[timediff(@SystemTime) <= 604800000]]]")) { "Possible Event Log Clearing:"; Get-WinEvent -LogName Security -FilterXPath "*[System[(EventID=1102) and TimeCreated[timediff(@SystemTime) <= 604800000]]]" | Select-Object TimeCreated, Message }
 }
 $sysUptime = "System-Uptime: $((New-TimeSpan -Start (Get-CimInstance Win32_OperatingSystem).LastBootUpTime -End (Get-Date)) | ForEach-Object { "$($_.Days) Days, {0:D2}:{1:D2}:{2:D2}" -f $_.Hours, $_.Minutes, $_.Seconds })"
-
-$documentspath = [System.Environment]::GetFolderPath('MyDocuments')
-$settingsxml = Get-Content "$documentspath\Rockstar Games\GTA V\settings.xml"
-$linesToCheck = $settingsxml[1..($settingsxml.Length - 1)]
-$minusLines = $linesToCheck | Where-Object { $_ -match "-" }
-$lodScaleLines = $linesToCheck | Where-Object { $_ -match '<LodScale' -and ([float]($_ -replace '.*value="([0-9.]+)".*', '$1')) -lt 1.0 }
-$minusResults = ($minusLines + $lodScaleLines) -join "`n"
-
-$minusSettings = if ($minusResults) {
-    "Minus-Settings found in settings.xml:"
-    $minusResults
-}
 
 
 Write-Host "   Dumping Process Memory"-ForegroundColor yellow
@@ -721,8 +709,8 @@ elseif (Get-Content "C:\windows\inf\setupapi.dev.log" -Force | Select-String "vd
 
 $unicodeTpath1 = "$dmppath\Journal\0_RawDump.csv"
 $unicodeTpath2 = "$dmppath\Paths.txt"
-$unicodeTdata1 = Import-Csv $unicodeTpath1 | Where-Object { $_.FILENAME -match '\?.exe' -or $_.FILENAME -match '\?.dll' -or $_.FILENAME -match '(?![äöüß])[^\x00-\x7F]' }
-$unicodeTdata2 = Get-Content $unicodeTpath2 | Where-Object { $_ -match '\?.exe' -or $_ -match '\?.dll' -or $_ -match '(?![äöüß])[^\x00-\x7F]' }
+$unicodeTdata1 = Import-Csv $unicodeTpath1 | Where-Object { $_.FILENAME -match '\?.exe' -or $_.FILENAME -match '\?.dll' -or $_.FILENAME -match '(?![Г¤Г¶ГјГџ])[^\x00-\x7F]' }
+$unicodeTdata2 = Get-Content $unicodeTpath2 | Where-Object { $_ -match '\?.exe' -or $_ -match '\?.dll' -or $_ -match '(?![Г¤Г¶ГјГџ])[^\x00-\x7F]' }
 $unicodeTampering = $unicodeTdata1 + $unicodeTdata2
 if ($unicodeTampering) { $unicodeTampering = $unicodeTampering | ForEach-Object { "Possible Unicode Manipulation found in Journal or Process - $_" } }
 
@@ -860,4 +848,4 @@ $cheats3
 @($cheats1; $cheats2; $cheats3; $h1; $o1; $susJournal; $o6; $o7; $dnssus; $minusSettings; $t3; $sUptime; $sysUptime; $h2; $Tamperings; $h3; $Defenderstatus; $threats1; $threats2; $threats3; $h4; $eventResults; $h5; $t1; $combine; $t2; $dps1; $r; $t4; $noFilesFound) | Add-Content c:\temp\Results.txt
 
 
-Write-Host "Done! Results are in C:\Temp"    
+Write-Host "Done! Results are in C:\Temp"
