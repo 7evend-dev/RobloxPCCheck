@@ -1,15 +1,3 @@
-Write-Host ""
-Write-Host ""
-Write-Host "      8888888888  8888888888  888     888  8888888888  888b    888  8888888b."
-Write-Host "            d88P  888         888     888  888         8888b   888  888  'Y88b"
-Write-Host "           d88P   888         888     888  888         88888b  888  888    888"
-Write-Host "          d88P    8888888     Y88b   d88P  8888888     888Y88b 888  888    888"
-Write-Host "         8888     888          Y88b d88P   888         888 Y88b888  888    888"
-Write-Host "        d88P      888           Y88o88P    888         888  Y88888  888    888"
-Write-Host "       d88P       8888888888      Y8P      8888888888  888    Y888  8888888P"
-Write-Host ""
-Write-Host ""
-
 $configJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/7evend-dev/RobloxPCCheck/refs/heads/main/cfg.json" 
 $Solara = $configJson.Solara
 $EntryPoint = $configJson.EntryPoint
