@@ -260,7 +260,7 @@ $sUptime = $uptime | Sort-Object Service | Format-Table -AutoSize -HideTableHead
 foreach ($entry in $processList1.GetEnumerator()) {
     $service = $entry.Key
     $pidVal = $entry.Value
-    if ($null -ne $pidVal) {
+    if ($pidVal -is [int] -and $pidVal -gt 0) {
         & "$dmppath\strings2.exe" -s -a -t -l 5 -pid $pidVal | Select-String -Pattern "\.exe|\.bat|\.ps1|\.rar|\.zip|\.7z|\.dll" | Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
     }
 }
@@ -268,7 +268,7 @@ foreach ($entry in $processList1.GetEnumerator()) {
 foreach ($entry in $processList2.GetEnumerator()) {
     $service = $entry.Key
     $pidVal = $entry.Value
-    if ($null -ne $pidVal) {
+    if ($pidVal -is [int] -and $pidVal -gt 0) {
         & "$dmppath\strings2.exe" -l 5 -pid $pidVal | Select-String -Pattern "\.exe|\.bat|\.ps1|\.rar|\.zip|\.7z|\.dll|file:///" | Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
     }
 }
@@ -276,7 +276,7 @@ foreach ($entry in $processList2.GetEnumerator()) {
 foreach ($entry in $processList3.GetEnumerator()) {
     $service = $entry.Key
     $pidVal = $entry.Value
-    if ($null -ne $pidVal) {
+    if ($pidVal -is [int] -and $pidVal -gt 0) {
         & "$dmppath\strings2.exe" -s -a -t -l 5 -pid $pidVal | Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
     }
 }
@@ -709,8 +709,8 @@ elseif (Get-Content "C:\windows\inf\setupapi.dev.log" -Force | Select-String "vd
 
 $unicodeTpath1 = "$dmppath\Journal\0_RawDump.csv"
 $unicodeTpath2 = "$dmppath\Paths.txt"
-$unicodeTdata1 = Import-Csv $unicodeTpath1 | Where-Object { $_.FILENAME -match '\?.exe' -or $_.FILENAME -match '\?.dll' -or $_.FILENAME -match '(?![Г¤Г¶ГјГџ])[^\x00-\x7F]' }
-$unicodeTdata2 = Get-Content $unicodeTpath2 | Where-Object { $_ -match '\?.exe' -or $_ -match '\?.dll' -or $_ -match '(?![Г¤Г¶ГјГџ])[^\x00-\x7F]' }
+$unicodeTdata1 = Import-Csv $unicodeTpath1 | Where-Object { $_.FILENAME -match '\?.exe' -or $_.FILENAME -match '\?.dll' -or $_.FILENAME -match '(?![Р“В¤Р“В¶Р“СР“Сџ])[^\x00-\x7F]' }
+$unicodeTdata2 = Get-Content $unicodeTpath2 | Where-Object { $_ -match '\?.exe' -or $_ -match '\?.dll' -or $_ -match '(?![Р“В¤Р“В¶Р“СР“Сџ])[^\x00-\x7F]' }
 $unicodeTampering = $unicodeTdata1 + $unicodeTdata2
 if ($unicodeTampering) { $unicodeTampering = $unicodeTampering | ForEach-Object { "Possible Unicode Manipulation found in Journal or Process - $_" } }
 
