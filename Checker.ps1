@@ -260,24 +260,32 @@ $sUptime = $uptime | Sort-Object Service | Format-Table -AutoSize -HideTableHead
 foreach ($entry in $processList1.GetEnumerator()) {
     $service = $entry.Key
     $pidVal = $entry.Value
-    if ($pidVal -is [int] -and $pidVal -gt 0) {
-        & "$dmppath\strings2.exe" -s -a -t -l 5 -pid $pidVal | Select-String -Pattern "\.exe|\.bat|\.ps1|\.rar|\.zip|\.7z|\.dll" | Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
+
+    if ([int]$pidVal -gt 0) {
+        & "$dmppath\strings2.exe" -s -a -t -l 5 -pid $pidVal |
+        Select-String -Pattern "\.exe|\.bat|\.ps1|\.rar|\.zip|\.7z|\.dll" |
+        Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
     }
 }
 
 foreach ($entry in $processList2.GetEnumerator()) {
     $service = $entry.Key
     $pidVal = $entry.Value
-    if ($pidVal -is [int] -and $pidVal -gt 0) {
-        & "$dmppath\strings2.exe" -l 5 -pid $pidVal | Select-String -Pattern "\.exe|\.bat|\.ps1|\.rar|\.zip|\.7z|\.dll|file:///" | Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
+
+    if ([int]$pidVal -gt 0) {
+        & "$dmppath\strings2.exe" -l 5 -pid $pidVal |
+        Select-String -Pattern "\.exe|\.bat|\.ps1|\.rar|\.zip|\.7z|\.dll|file:///" |
+        Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
     }
 }
 
 foreach ($entry in $processList3.GetEnumerator()) {
     $service = $entry.Key
     $pidVal = $entry.Value
-    if ($pidVal -is [int] -and $pidVal -gt 0) {
-        & "$dmppath\strings2.exe" -s -a -t -l 5 -pid $pidVal | Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
+
+    if ([int]$pidVal -gt 0) {
+        & "$dmppath\strings2.exe" -s -a -t -l 5 -pid $pidVal |
+        Set-Content -Path "$procpathraw\$service.txt" -Encoding UTF8
     }
 }
 
